@@ -1,0 +1,9 @@
+c:\users\jared\documents\visual studio 2015\Projects\GinRummy\GinRummy\bin\Debug\GinRummy.exe.config
+c:\users\jared\documents\visual studio 2015\Projects\GinRummy\GinRummy\bin\Debug\GinRummy.exe
+c:\users\jared\documents\visual studio 2015\Projects\GinRummy\GinRummy\bin\Debug\GinRummy.pdb
+c:\users\jared\documents\visual studio 2015\Projects\GinRummy\GinRummy\obj\Debug\GinRummy.csprojResolveAssemblyReference.cache
+c:\users\jared\documents\visual studio 2015\Projects\GinRummy\GinRummy\obj\Debug\GinRummy.Properties.Resources.resources
+c:\users\jared\documents\visual studio 2015\Projects\GinRummy\GinRummy\obj\Debug\GinRummy.csproj.GenerateResource.Cache
+c:\users\jared\documents\visual studio 2015\Projects\GinRummy\GinRummy\obj\Debug\GinRummy.exe
+c:\users\jared\documents\visual studio 2015\Projects\GinRummy\GinRummy\obj\Debug\GinRummy.pdb
+C:\Users\Jared\Documents\Visual Studio 2015\Projects\GinRummy\GinRummy\obj\Debug\GinRummy.GameWindow.resources
