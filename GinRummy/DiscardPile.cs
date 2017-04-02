@@ -9,9 +9,16 @@ namespace GinRummy
     class DiscardPile
     {
         List<Card> cards = new List<Card>();
-        List<Card> pickUp()
+        public List<Card> pickUp(bool isMeld, Card targetCard)
         {
-            return cards;
+            int targetCardIndex = cards.IndexOf(targetCard);
+            if (isMeld || targetCardIndex == 0)
+            {
+                List<Card> pickup = cards.GetRange(0, targetCardIndex + 1);
+                cards.RemoveRange(0, targetCardIndex + 1);
+                return pickup;
+            }
+            return null;
         }
         public void discard(Card c)
         {

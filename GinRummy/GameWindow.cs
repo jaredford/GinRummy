@@ -57,7 +57,7 @@ namespace GinRummy
             //card1.Image = (Bitmap)resourceManager.GetObject(l.SelectedItem.ToString().ToLower().Replace(" ", "_"));
         }
         private void addToDiscardImages(Card card)
-        { 
+        {
             card1 = new System.Windows.Forms.PictureBox();
             card1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             card1.Location = new System.Drawing.Point(1, 74);//+21
@@ -94,6 +94,31 @@ namespace GinRummy
             }
         }
 
+        private void doubleClickDiscardList(object sender, EventArgs e)
+        {
+            // Make sure the player hasn't picked up yet
+            if (!g.didPickUp())
+            {
+                ListBox l = sender as ListBox;
+                int turn = g.getTurn();
+                List<Card> c = discardPile.pickUp(g.isMeld(g.players[turn - 1].getHand(), l.SelectedItem as Card), l.SelectedItem as Card);
+                if(c != null)
+                {
+                    g.players[turn - 1].pickUp(c);
+                    playerHands[turn - 1].DataSource = null;
+                    playerHands[turn - 1].DataSource = g.players[turn - 1].getHand();
+                    discardList.DataSource = null;
+                    discardList.DataSource = discardPile.getCards();
+                    discardList.Refresh();
+                    g.setPickedUp();
+                }
+                else
+                {
+                    infoLabel.Text = "Illegal Draw!";
+                }
+            }
+        }
+
         private void pickUpClick(object sender, EventArgs e)
         {
             // Make sure the player only draws one card
@@ -105,27 +130,11 @@ namespace GinRummy
                 if (b == (Button)Controls.Find("pickUp" + turn, true)[0])
                 {
                     ListBox l = (ListBox)Controls.Find("playerHand" + turn, true)[0];
-                    g.players[turn - 1].pickUp(g.deck.draw());
+                    List<Card> c = new List<Card>();
+                    c.Add(g.deck.draw());
+                    g.players[turn - 1].pickUp(c);
                     l.DataSource = null;
                     l.DataSource = g.players[turn - 1].getHand();
-                }
-            }
-        }
-
-        private void discardList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // Make sure the player only draws one card
-            if (!g.didPickUp())
-            {
-                ListBox l = sender as ListBox;
-                int turn = g.getTurn();
-                if(g.isMeld(g.players[turn - 1].getHand(), l.SelectedItem as Card))
-                {
-                    welcomeText.Text = "That's a meld!";
-                }
-                else
-                {
-                    welcomeText.Text = "That's not a meld";
                 }
             }
         }

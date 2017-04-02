@@ -34,9 +34,9 @@ namespace GinRummy
             return hand;
         }
 
-        public void pickUp(Card c)
+        public void pickUp(List<Card> c)
         {
-            hand.Add(c);
+            hand.AddRange(c);
         }
         
         void refreshPoints()

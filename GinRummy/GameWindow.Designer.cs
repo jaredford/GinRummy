@@ -96,7 +96,7 @@
             this.discardList.Name = "discardList";
             this.discardList.Size = new System.Drawing.Size(120, 95);
             this.discardList.TabIndex = 6;
-            this.discardList.SelectedIndexChanged += new System.EventHandler(this.discardList_SelectedIndexChanged);
+            this.discardList.DoubleClick += new System.EventHandler(this.doubleClickDiscardList);
             // 
             // playerHand1
             // 
