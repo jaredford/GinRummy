@@ -15,6 +15,12 @@ namespace GinRummy
             cards.RemoveRange(0, numberOfPlayers * 7);
             return cardsToDeal;
         }
+        public Card draw()
+        {
+            Card c = cards[0];
+            cards.Remove(c);
+            return c;
+        }
         public void populateDeck()
         {
             Random _random = new Random();

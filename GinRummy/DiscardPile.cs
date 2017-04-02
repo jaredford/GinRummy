@@ -13,5 +13,13 @@ namespace GinRummy
         {
             return cards;
         }
+        public void discard(Card c)
+        {
+            cards.Insert(0, c);
+        }
+        public List<Card> getCards()
+        {
+            return cards;
+        }
     }
 }

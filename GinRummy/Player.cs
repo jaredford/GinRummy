@@ -13,7 +13,8 @@ namespace GinRummy
         protected int points;
         void rearrangeHand()
         {
-            hand.Sort(); //TODO: provide different sorting options
+            hand.Sort((a,b) => b.getFaceValue().CompareTo(a.getFaceValue()));
+            hand.Sort((a, b) => a.getSuit().CompareTo(b.getSuit()));
         }
         int getPoints()
         {
@@ -23,10 +24,21 @@ namespace GinRummy
         {
             hand = c;
         }
+        public void discard(Card c)
+        {
+            hand.Remove(c);
+        }
         public List<Card> getHand()
         {
+            rearrangeHand();
             return hand;
         }
+
+        public void pickUp(Card c)
+        {
+            hand.Add(c);
+        }
+        
         void refreshPoints()
         {
             int tempPoints = 0;
@@ -36,7 +48,7 @@ namespace GinRummy
                 {
                     tempPoints += 15;
                 }
-                else if(card.getFaceValue() >= (int) FaceValues.Jack)
+                else if(card.getFaceValue() >= (int)FaceValues.Jack)
                 {
                     tempPoints += 10;
                 }

@@ -26,6 +26,11 @@ namespace GinRummy
         {
             return suit;
         }
+
+        public override string ToString()
+        {
+            return Enum.GetName(typeof(FaceValues), this.getFaceValue()) + " of " + Enum.GetName(typeof(Suits), this.getSuit());
+        }
     }
     enum FaceValues
     {

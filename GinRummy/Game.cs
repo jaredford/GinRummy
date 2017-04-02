@@ -13,7 +13,8 @@ namespace GinRummy
         public List<Player> players = new List<Player>();
         public Deck deck = new Deck();
         public DiscardPile discardPile = new DiscardPile();
-        int turn = 0;
+        bool pickedUp = false;
+        int turn, numberOfPlayers;
         void InitializePlayers(int numberOfPlayers)
         {
             for (int i = 0; i < numberOfPlayers; i++)
@@ -21,6 +22,8 @@ namespace GinRummy
         }
         public Game(int numberOfPlayers)
         {
+            turn = 1;
+            this.numberOfPlayers = numberOfPlayers;
             deck.populateDeck();
             InitializePlayers(numberOfPlayers);
             List<Card> deal = deck.deal(numberOfPlayers);
@@ -29,6 +32,70 @@ namespace GinRummy
                 players[i].setHand(deal.GetRange(0, 7));
                 deal.RemoveRange(0, 7);
             }
+        }
+        public int getTurn()
+        {
+            return turn;
+        }
+
+        public bool isMeld(List<Card> cards, Card newCard)
+        {
+            int sameFace = 0, run = 0;
+            int suit = newCard.getSuit();
+            int faceValue = newCard.getFaceValue();
+            bool meld = false;
+            List<int> targetOffset = new List<int>();
+            foreach (var card in cards)
+            {
+                sameFace = card.getFaceValue() == faceValue ? sameFace + 1 : sameFace;
+                if(card.getSuit() == suit)
+                {
+                    switch (card.getFaceValue() - faceValue)
+                    {
+                        case -2:
+                            meld = targetOffset.Contains(-2) ? true : meld;
+                            targetOffset.Add(-1);
+                            break;
+                        case -1:
+                            targetOffset.Add(1);
+                            targetOffset.Add(-2);
+                            meld = targetOffset.Contains(-1) ? true : meld;
+                            break;
+                        case 1:
+                            targetOffset.Add(-1);
+                            targetOffset.Add(2);
+                            meld = targetOffset.Contains(1) ? true : meld;
+                            break;
+                        case 2:
+                            targetOffset.Add(1);
+                            meld = targetOffset.Contains(2) ? true : meld;
+                            break;
+                        
+                        
+                    }
+                }
+
+            }
+            if(sameFace >= 2)
+            {
+                meld = true;
+            }
+            return meld;
+        }
+        public void setPickedUp()
+        {
+            pickedUp = true;
+        }
+
+        public bool didPickUp()
+        {
+            return pickedUp;
+        }
+
+        public void nextTurn()
+        {
+            pickedUp = false;
+            turn = turn == numberOfPlayers ? 1 : turn + 1;
         }
     }
 }
