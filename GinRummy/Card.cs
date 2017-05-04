@@ -27,6 +27,11 @@ namespace GinRummy
             return suit;
         }
 
+        public string ToShortString()
+        {
+            return Enum.GetName(typeof(FaceValues), this.getFaceValue()) + " " + Enum.GetName(typeof(ShortSuits), this.getSuit());
+        }
+
         public override string ToString()
         {
             return Enum.GetName(typeof(FaceValues), this.getFaceValue()) + " of " + Enum.GetName(typeof(Suits), this.getSuit());
@@ -54,5 +59,12 @@ namespace GinRummy
         Diamonds,
         Spades,
         Clubs
+    }
+    enum ShortSuits
+    {
+        H,
+        D,
+        S,
+        C
     }
 }

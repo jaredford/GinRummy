@@ -8,7 +8,7 @@ namespace GinRummy
 {
     class Deck
     {
-        public List<Card> cards = new List<Card>();
+        List<Card> cards = new List<Card>();
         public List<Card> deal(int numberOfPlayers)
         {
             List<Card> cardsToDeal = new List<Card>(cards.GetRange(0, numberOfPlayers * 7));

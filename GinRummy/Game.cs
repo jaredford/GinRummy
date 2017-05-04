@@ -11,6 +11,7 @@ namespace GinRummy
         GameWindow g = new GameWindow();
         public Dictionary<Player, int> playerPoints = new Dictionary<Player, int>();
         public List<Player> players = new List<Player>();
+        public List<List<Card>> melds = new List<List<Card>>();
         public Deck deck = new Deck();
         public DiscardPile discardPile = new DiscardPile();
         bool pickedUp = false;
@@ -38,9 +39,16 @@ namespace GinRummy
             return turn;
         }
 
+        public void addMeld(List<Card> cards)
+        {
+            melds.Add(cards);
+        }
+
         public bool isMeld(List<Card> cards, Card newCard)
         {
-            int sameFace = 0, run = 0;
+            if (cards.Contains(newCard))
+                cards.Remove(newCard);
+            int sameFace = 0;
             int suit = newCard.getSuit();
             int faceValue = newCard.getFaceValue();
             bool meld = false;
