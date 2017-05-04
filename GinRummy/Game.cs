@@ -83,6 +83,30 @@ namespace GinRummy
                                 break;
                         }
                     }
+                    else if(faceValue == (int)FaceValues.Ace)
+                    {
+                        switch (card.getFaceValue() - ((int)FaceValues.King + 1))
+                        {
+                            case -2:
+                                meld = targetOffset.Contains(-2) ? true : meld;
+                                targetOffset.Add(-1);
+                                break;
+                            case -1:
+                                targetOffset.Add(1);
+                                targetOffset.Add(-2);
+                                meld = targetOffset.Contains(-1) ? true : meld;
+                                break;
+                            case 1:
+                                targetOffset.Add(-1);
+                                targetOffset.Add(2);
+                                meld = targetOffset.Contains(1) ? true : meld;
+                                break;
+                            case 2:
+                                targetOffset.Add(1);
+                                meld = targetOffset.Contains(2) ? true : meld;
+                                break;
+                        }
+                    }
                     switch (card.getFaceValue() - faceValue)
                     {
                         case -2:

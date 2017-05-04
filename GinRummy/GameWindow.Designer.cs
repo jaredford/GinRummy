@@ -65,6 +65,7 @@
             this.playerPoints3 = new System.Windows.Forms.Label();
             this.playerPoints2 = new System.Windows.Forms.Label();
             this.playerPoints1 = new System.Windows.Forms.Label();
+            this.layoffButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // startGame
@@ -277,6 +278,7 @@
             // 
             // pickupButton
             // 
+            this.pickupButton.Enabled = false;
             this.pickupButton.Location = new System.Drawing.Point(548, 446);
             this.pickupButton.Name = "pickupButton";
             this.pickupButton.Size = new System.Drawing.Size(118, 29);
@@ -287,6 +289,7 @@
             // 
             // meldButton
             // 
+            this.meldButton.Enabled = false;
             this.meldButton.Location = new System.Drawing.Point(548, 481);
             this.meldButton.Name = "meldButton";
             this.meldButton.Size = new System.Drawing.Size(118, 29);
@@ -335,11 +338,23 @@
             this.playerPoints1.Text = "0";
             this.playerPoints1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // layoffButton
+            // 
+            this.layoffButton.Enabled = false;
+            this.layoffButton.Location = new System.Drawing.Point(548, 516);
+            this.layoffButton.Name = "layoffButton";
+            this.layoffButton.Size = new System.Drawing.Size(118, 29);
+            this.layoffButton.TabIndex = 22;
+            this.layoffButton.Text = "Lay Off";
+            this.layoffButton.UseVisualStyleBackColor = true;
+            this.layoffButton.Click += new System.EventHandler(this.layoffButton_Click);
+            // 
             // GameWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1190, 811);
+            this.Controls.Add(this.layoffButton);
             this.Controls.Add(this.playerPoints1);
             this.Controls.Add(this.playerPoints2);
             this.Controls.Add(this.playerPoints3);
@@ -403,6 +418,7 @@
         private System.Windows.Forms.Label playerPoints3;
         private System.Windows.Forms.Label playerPoints2;
         private System.Windows.Forms.Label playerPoints1;
+        private System.Windows.Forms.Button layoffButton;
     }
 }
 

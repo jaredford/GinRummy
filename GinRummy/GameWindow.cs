@@ -20,6 +20,7 @@ namespace GinRummy
         // Start the game with a specified number of players
         private void startGame_Click(object sender, EventArgs e)
         {
+            pickupButton.Enabled = true;
             try
             {
                 int players = int.Parse(numPlayers.Text);
@@ -46,6 +47,7 @@ namespace GinRummy
         private void selectedIndexChanged(object sender, EventArgs e)
         {
             // Gets called whenever a player's list of selected cards changes
+            infoLabel.ResetText();
             ListBox l = sender as ListBox;
             List<Card> cards = new List<Card>();
             foreach (var card in l.SelectedItems)
@@ -58,12 +60,19 @@ namespace GinRummy
             cards.RemoveAt(cards.Count - 1);
             if (g.isMeld(cards, c))
             {
-                infoLabel.Text = "meld";
                 meldButton.Enabled = true;
             }
             else
             {
-                infoLabel.Text = "not meld";
+                bool layoffPossible = false;
+                foreach (var meld in g.melds)
+                {
+                    if (g.isMeld(meld, c))
+                    {
+                        layoffPossible = true;
+                    }
+                }
+                layoffButton.Enabled = layoffPossible;
                 meldButton.Enabled = false;
             }
         }
@@ -81,12 +90,13 @@ namespace GinRummy
             }
             melds.Items.Add(item);
             g.addMeld(cards);
+            infoLabel.ResetText();
         }
 
         private void doubleClickList(object sender, EventArgs e)
         {
             // Make sure the player didn't just pick up from the discard pile
-            if(g.pickedUpCard != null)
+            if (g.pickedUpCard != null)
             {
                 infoLabel.Text = "You must make a meld with the " + g.pickedUpCard;
                 return;
@@ -156,7 +166,7 @@ namespace GinRummy
             {
                 int turn = g.getTurn();
                 g.setPickedUp();
-                ListBox l = (ListBox)Controls.Find("playerHand" + turn, true)[0];// get the current player's hand
+                ListBox l = (ListBox)Controls.Find("playerHand" + turn, true)[0]; // get the current player's hand
                 List<Card> c = new List<Card>();
                 c.Add(g.deck.draw());
                 g.players[turn - 1].pickUp(c);
@@ -174,7 +184,7 @@ namespace GinRummy
             foreach (Card card in l.SelectedItems)
             {
                 cards.Add(card as Card);
-                if(card.getFaceValue() >= (int)FaceValues.Two && card.getFaceValue() < (int)FaceValues.Ten)
+                if (card.getFaceValue() >= (int)FaceValues.Two && card.getFaceValue() < (int)FaceValues.Ten)
                 {
                     g.players[turn - 1].addPoints(5);
                 }
@@ -187,11 +197,46 @@ namespace GinRummy
             {
                 g.players[turn - 1].getHand().Remove(card);
             }
-            Label playerPoints = (Label)Controls.Find("playerPoints" + turn, true)[0];
+            Label playerPoints = (Label)Controls.Find("playerPoints" + turn, true)[0]; // update player points
             playerPoints.Text = g.players[turn - 1].getPoints().ToString();
+
             l.DataSource = null;
             l.DataSource = g.players[turn - 1].getHand();
             addToMeldList(cards);
+        }
+
+        private void layoffButton_Click(object sender, EventArgs e)
+        {
+            int turn = g.getTurn();
+            ListBox l = (ListBox)Controls.Find("playerHand" + turn, true)[0]; // get the current player's hand
+
+            Card cardToLayoff = l.SelectedItem as Card;
+            g.players[turn - 1].getHand().Remove(cardToLayoff);
+
+            Label playerPoints = (Label)Controls.Find("playerPoints" + turn, true)[0]; // update player points
+            playerPoints.Text = g.players[turn - 1].getPoints().ToString();
+
+            l.DataSource = null;
+            l.DataSource = g.players[turn - 1].getHand();
+            layoffCard(cardToLayoff);
+        }
+
+        private void layoffCard(Card card)
+        {
+            // Function to layoff cards
+            meld++;
+            ListView melds = (ListView)Controls.Find("meldList", true)[0];
+            ListViewItem item = new ListViewItem("Meld " + meld);
+            int i = -1;
+            foreach (var meld in g.melds)
+            {
+                i++;
+                if (g.isMeld(meld, card))
+                    break;
+            }
+            melds.Items[0].SubItems.Add(card.ToShortString());
+            g.melds[i].Add(card);
+            infoLabel.ResetText();
         }
     }
 }
