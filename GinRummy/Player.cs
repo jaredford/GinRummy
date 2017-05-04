@@ -8,8 +8,8 @@ namespace GinRummy
 {
     class Player
     {
-        protected List<Card> hand = new List<Card>();
-        protected List<Card> playedCards = new List<Card>();
+        private List<Card> hand = new List<Card>();
+        private List<Card> playedCards = new List<Card>();
         private int points;
         void rearrangeHand()
         {
