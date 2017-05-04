@@ -27,6 +27,15 @@ namespace GinRummy
             return suit;
         }
 
+        public int getPointValue()
+        {
+            if(faceValue >= (int)FaceValues.Two && faceValue < (int)FaceValues.Ten)
+            {
+                return 5;
+            }
+            return 10;
+        }
+
         public string ToShortString()
         {
             return Enum.GetName(typeof(FaceValues), this.getFaceValue()) + " " + Enum.GetName(typeof(ShortSuits), this.getSuit());

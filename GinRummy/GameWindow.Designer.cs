@@ -39,26 +39,6 @@
             this.playerHand3 = new System.Windows.Forms.ListBox();
             this.playerHand4 = new System.Windows.Forms.ListBox();
             this.meldList = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pickupButton = new System.Windows.Forms.Button();
             this.meldButton = new System.Windows.Forms.Button();
             this.playerPoints4 = new System.Windows.Forms.Label();
@@ -168,113 +148,12 @@
             // 
             // meldList
             // 
-            this.meldList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5,
-            this.columnHeader6,
-            this.columnHeader7,
-            this.columnHeader8,
-            this.columnHeader9,
-            this.columnHeader10,
-            this.columnHeader11,
-            this.columnHeader12,
-            this.columnHeader13,
-            this.columnHeader14,
-            this.columnHeader15,
-            this.columnHeader16,
-            this.columnHeader17,
-            this.columnHeader18,
-            this.columnHeader19,
-            this.columnHeader20});
             this.meldList.Location = new System.Drawing.Point(12, 94);
             this.meldList.Name = "meldList";
             this.meldList.Size = new System.Drawing.Size(1166, 184);
             this.meldList.TabIndex = 15;
             this.meldList.UseCompatibleStateImageBehavior = false;
             this.meldList.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Meld";
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Card 1";
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Card 2";
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Card 3";
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "Card 4";
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "Card 5";
-            // 
-            // columnHeader7
-            // 
-            this.columnHeader7.Text = "Card 6";
-            // 
-            // columnHeader8
-            // 
-            this.columnHeader8.Text = "Card 7";
-            // 
-            // columnHeader9
-            // 
-            this.columnHeader9.Text = "Card 8";
-            // 
-            // columnHeader10
-            // 
-            this.columnHeader10.Text = "Card 9";
-            // 
-            // columnHeader11
-            // 
-            this.columnHeader11.Text = "Card 10";
-            // 
-            // columnHeader12
-            // 
-            this.columnHeader12.Text = "Card 11";
-            // 
-            // columnHeader13
-            // 
-            this.columnHeader13.Text = "Card 12";
-            // 
-            // columnHeader14
-            // 
-            this.columnHeader14.Text = "Card 13";
-            // 
-            // columnHeader15
-            // 
-            this.columnHeader15.Text = "Card 14";
-            // 
-            // columnHeader16
-            // 
-            this.columnHeader16.Text = "Card 15";
-            // 
-            // columnHeader17
-            // 
-            this.columnHeader17.Text = "Card 16";
-            // 
-            // columnHeader18
-            // 
-            this.columnHeader18.Text = "Card 17";
-            // 
-            // columnHeader19
-            // 
-            this.columnHeader19.Text = "Card 18";
-            // 
-            // columnHeader20
-            // 
-            this.columnHeader20.Text = "Card 19";
             // 
             // pickupButton
             // 
@@ -394,26 +273,6 @@
         private System.Windows.Forms.ListView meldList;
         private System.Windows.Forms.Button pickupButton;
         private System.Windows.Forms.Button meldButton;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.ColumnHeader columnHeader6;
-        private System.Windows.Forms.ColumnHeader columnHeader7;
-        private System.Windows.Forms.ColumnHeader columnHeader8;
-        private System.Windows.Forms.ColumnHeader columnHeader9;
-        private System.Windows.Forms.ColumnHeader columnHeader10;
-        private System.Windows.Forms.ColumnHeader columnHeader11;
-        private System.Windows.Forms.ColumnHeader columnHeader12;
-        private System.Windows.Forms.ColumnHeader columnHeader13;
-        private System.Windows.Forms.ColumnHeader columnHeader14;
-        private System.Windows.Forms.ColumnHeader columnHeader15;
-        private System.Windows.Forms.ColumnHeader columnHeader16;
-        private System.Windows.Forms.ColumnHeader columnHeader17;
-        private System.Windows.Forms.ColumnHeader columnHeader18;
-        private System.Windows.Forms.ColumnHeader columnHeader19;
-        private System.Windows.Forms.ColumnHeader columnHeader20;
         private System.Windows.Forms.Label playerPoints4;
         private System.Windows.Forms.Label playerPoints3;
         private System.Windows.Forms.Label playerPoints2;

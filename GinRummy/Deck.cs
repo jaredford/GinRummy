@@ -11,8 +11,9 @@ namespace GinRummy
         List<Card> cards = new List<Card>();
         public List<Card> deal(int numberOfPlayers)
         {
-            List<Card> cardsToDeal = new List<Card>(cards.GetRange(0, numberOfPlayers * 7));
-            cards.RemoveRange(0, numberOfPlayers * 7);
+            int numCards = numberOfPlayers > 2 ? 7 : 13;
+            List<Card> cardsToDeal = new List<Card>(cards.GetRange(0, numberOfPlayers * numCards));
+            cards.RemoveRange(0, numberOfPlayers * numCards);
             return cardsToDeal;
         }
         public Card draw()
