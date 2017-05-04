@@ -47,6 +47,11 @@ namespace GinRummy
                     l.DataSource = player.getHand();
                     i++;
                 }
+                for (int j = 0; j < g.players.Count(); j++)
+                {
+                    playerHands[j].DataSource = null;
+                }
+                playerHands[g.getTurn() - 1].DataSource = g.players[g.getTurn() - 1].getHand();
                 startGame.Enabled = false;
                 pickupButton.Enabled = true;
                 playerHand1.Enabled = true;
@@ -164,9 +169,15 @@ namespace GinRummy
                     playerHands[turn - 1].DataSource = g.players[turn - 1].getHand();
                     discardList.DataSource = null;
                     discardList.DataSource = discardPile.getCards();
-                    discardList.Refresh();
+                    discardList.Refresh();                    
                     g.nextTurn();
+                    playerHands[turn - 1].DataSource = g.players[turn - 1].getHand();
                     infoLabel.Text = "It's Player " + g.getTurn() + "'s Turn";
+                    for (int i = 0; i < g.players.Count(); i++)
+                    {
+                        playerHands[i].DataSource = null;
+                        playerHands[i].DataSource = new List<string>();
+                    }
                     pickupButton.Enabled = true;
                 }
             }
