@@ -15,6 +15,7 @@ namespace GinRummy
         public Deck deck = new Deck();
         public DiscardPile discardPile = new DiscardPile();
         bool pickedUp = false;
+        public Card pickedUpCard = null;
         int turn, numberOfPlayers;
         void InitializePlayers(int numberOfPlayers)
         {
@@ -58,6 +59,30 @@ namespace GinRummy
                 sameFace = card.getFaceValue() == faceValue ? sameFace + 1 : sameFace;
                 if(card.getSuit() == suit)
                 {
+                    if(card.getFaceValue() == (int)FaceValues.Ace) // Aces can also be played as the highest card
+                    {
+                        switch ((int)FaceValues.King + 1 - faceValue)
+                        {
+                            case -2:
+                                meld = targetOffset.Contains(-2) ? true : meld;
+                                targetOffset.Add(-1);
+                                break;
+                            case -1:
+                                targetOffset.Add(1);
+                                targetOffset.Add(-2);
+                                meld = targetOffset.Contains(-1) ? true : meld;
+                                break;
+                            case 1:
+                                targetOffset.Add(-1);
+                                targetOffset.Add(2);
+                                meld = targetOffset.Contains(1) ? true : meld;
+                                break;
+                            case 2:
+                                targetOffset.Add(1);
+                                meld = targetOffset.Contains(2) ? true : meld;
+                                break;
+                        }
+                    }
                     switch (card.getFaceValue() - faceValue)
                     {
                         case -2:
@@ -77,9 +102,7 @@ namespace GinRummy
                         case 2:
                             targetOffset.Add(1);
                             meld = targetOffset.Contains(2) ? true : meld;
-                            break;
-                        
-                        
+                            break;                        
                     }
                 }
 

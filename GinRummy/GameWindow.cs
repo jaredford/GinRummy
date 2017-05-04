@@ -43,7 +43,7 @@ namespace GinRummy
             infoLabel.Text += text;
         }
 
-        private void playerHand1_SelectedIndexChanged(object sender, EventArgs e)
+        private void selectedIndexChanged(object sender, EventArgs e)
         {
             // Gets called whenever a player's list of selected cards changes
             ListBox l = sender as ListBox;
@@ -77,6 +77,7 @@ namespace GinRummy
             foreach (var card in cards)
             {
                 item.SubItems.Add(card.ToShortString());
+                g.pickedUpCard = card == g.pickedUpCard ? null : g.pickedUpCard;
             }
             melds.Items.Add(item);
             g.addMeld(cards);
@@ -84,6 +85,12 @@ namespace GinRummy
 
         private void doubleClickList(object sender, EventArgs e)
         {
+            // Make sure the player didn't just pick up from the discard pile
+            if(g.pickedUpCard != null)
+            {
+                infoLabel.Text = "You must make a meld with the " + g.pickedUpCard;
+                return;
+            }
             // Make sure the player has picked up before discarding
             if (g.didPickUp())
             {
@@ -110,17 +117,19 @@ namespace GinRummy
             if (!g.didPickUp())
             {
                 ListBox l = sender as ListBox;
+                Card selectedCard = l.SelectedItem as Card;
                 int turn = g.getTurn();
                 List<Card> temp = new List<Card>();
                 temp.AddRange(g.players[turn - 1].getHand());
                 if (l.SelectedIndex != 0)
                 {
+                    g.pickedUpCard = selectedCard;
                     for (int i = l.SelectedIndex; i >= 0; i--)
                     {
                         temp.Add(discardPile.getCards()[i]);
                     }
                 }
-                List<Card> c = discardPile.pickUp(g.isMeld(temp, l.SelectedItem as Card), l.SelectedItem as Card);
+                List<Card> c = discardPile.pickUp(g.isMeld(temp, selectedCard), selectedCard);
                 if (c != null)
                 {
                     g.players[turn - 1].pickUp(c);
@@ -162,14 +171,24 @@ namespace GinRummy
             int turn = g.getTurn();
             ListBox l = (ListBox)Controls.Find("playerHand" + turn, true)[0]; // get the current player's hand
             List<Card> cards = new List<Card>();
-            foreach (var card in l.SelectedItems)
+            foreach (Card card in l.SelectedItems)
             {
                 cards.Add(card as Card);
+                if(card.getFaceValue() >= (int)FaceValues.Two && card.getFaceValue() < (int)FaceValues.Ten)
+                {
+                    g.players[turn - 1].addPoints(5);
+                }
+                else
+                {
+                    g.players[turn - 1].addPoints(10);
+                }
             }
             foreach (var card in cards)
             {
                 g.players[turn - 1].getHand().Remove(card);
             }
+            Label playerPoints = (Label)Controls.Find("playerPoints" + turn, true)[0];
+            playerPoints.Text = g.players[turn - 1].getPoints().ToString();
             l.DataSource = null;
             l.DataSource = g.players[turn - 1].getHand();
             addToMeldList(cards);

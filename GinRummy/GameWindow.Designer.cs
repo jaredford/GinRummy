@@ -44,8 +44,6 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.pickupButton = new System.Windows.Forms.Button();
-            this.meldButton = new System.Windows.Forms.Button();
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -61,6 +59,12 @@
             this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.pickupButton = new System.Windows.Forms.Button();
+            this.meldButton = new System.Windows.Forms.Button();
+            this.playerPoints4 = new System.Windows.Forms.Label();
+            this.playerPoints3 = new System.Windows.Forms.Label();
+            this.playerPoints2 = new System.Windows.Forms.Label();
+            this.playerPoints1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // startGame
@@ -68,7 +72,7 @@
             this.startGame.Location = new System.Drawing.Point(1103, 776);
             this.startGame.Name = "startGame";
             this.startGame.Size = new System.Drawing.Size(75, 23);
-            this.startGame.TabIndex = 0;
+            this.startGame.TabIndex = 1;
             this.startGame.Text = "Start Game";
             this.startGame.UseVisualStyleBackColor = true;
             this.startGame.Click += new System.EventHandler(this.startGame_Click);
@@ -78,7 +82,7 @@
             this.numPlayers.Location = new System.Drawing.Point(1021, 779);
             this.numPlayers.Name = "numPlayers";
             this.numPlayers.Size = new System.Drawing.Size(54, 20);
-            this.numPlayers.TabIndex = 1;
+            this.numPlayers.TabIndex = 0;
             // 
             // label1
             // 
@@ -111,7 +115,7 @@
             // discardList
             // 
             this.discardList.FormattingEnabled = true;
-            this.discardList.Location = new System.Drawing.Point(513, 330);
+            this.discardList.Location = new System.Drawing.Point(546, 330);
             this.discardList.Name = "discardList";
             this.discardList.Size = new System.Drawing.Size(120, 95);
             this.discardList.TabIndex = 6;
@@ -120,42 +124,45 @@
             // playerHand1
             // 
             this.playerHand1.FormattingEnabled = true;
-            this.playerHand1.Location = new System.Drawing.Point(946, 330);
+            this.playerHand1.Location = new System.Drawing.Point(979, 330);
             this.playerHand1.Name = "playerHand1";
             this.playerHand1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.playerHand1.Size = new System.Drawing.Size(120, 95);
+            this.playerHand1.Size = new System.Drawing.Size(120, 251);
             this.playerHand1.TabIndex = 7;
-            this.playerHand1.SelectedIndexChanged += new System.EventHandler(this.playerHand1_SelectedIndexChanged);
+            this.playerHand1.SelectedIndexChanged += new System.EventHandler(this.selectedIndexChanged);
             this.playerHand1.DoubleClick += new System.EventHandler(this.doubleClickList);
             // 
             // playerHand2
             // 
             this.playerHand2.FormattingEnabled = true;
-            this.playerHand2.Location = new System.Drawing.Point(704, 558);
+            this.playerHand2.Location = new System.Drawing.Point(751, 428);
             this.playerHand2.Name = "playerHand2";
             this.playerHand2.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.playerHand2.Size = new System.Drawing.Size(120, 95);
+            this.playerHand2.Size = new System.Drawing.Size(120, 251);
             this.playerHand2.TabIndex = 8;
+            this.playerHand2.SelectedIndexChanged += new System.EventHandler(this.selectedIndexChanged);
             this.playerHand2.DoubleClick += new System.EventHandler(this.doubleClickList);
             // 
             // playerHand3
             // 
             this.playerHand3.FormattingEnabled = true;
-            this.playerHand3.Location = new System.Drawing.Point(292, 558);
+            this.playerHand3.Location = new System.Drawing.Point(325, 428);
             this.playerHand3.Name = "playerHand3";
             this.playerHand3.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.playerHand3.Size = new System.Drawing.Size(120, 95);
+            this.playerHand3.Size = new System.Drawing.Size(120, 251);
             this.playerHand3.TabIndex = 9;
+            this.playerHand3.SelectedIndexChanged += new System.EventHandler(this.selectedIndexChanged);
             this.playerHand3.DoubleClick += new System.EventHandler(this.doubleClickList);
             // 
             // playerHand4
             // 
             this.playerHand4.FormattingEnabled = true;
-            this.playerHand4.Location = new System.Drawing.Point(45, 330);
+            this.playerHand4.Location = new System.Drawing.Point(76, 330);
             this.playerHand4.Name = "playerHand4";
             this.playerHand4.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.playerHand4.Size = new System.Drawing.Size(120, 95);
+            this.playerHand4.Size = new System.Drawing.Size(120, 251);
             this.playerHand4.TabIndex = 10;
+            this.playerHand4.SelectedIndexChanged += new System.EventHandler(this.selectedIndexChanged);
             this.playerHand4.DoubleClick += new System.EventHandler(this.doubleClickList);
             // 
             // meldList
@@ -207,26 +214,6 @@
             // columnHeader5
             // 
             this.columnHeader5.Text = "Card 4";
-            // 
-            // pickupButton
-            // 
-            this.pickupButton.Location = new System.Drawing.Point(515, 446);
-            this.pickupButton.Name = "pickupButton";
-            this.pickupButton.Size = new System.Drawing.Size(118, 29);
-            this.pickupButton.TabIndex = 16;
-            this.pickupButton.Text = "Pick Up";
-            this.pickupButton.UseVisualStyleBackColor = true;
-            this.pickupButton.Click += new System.EventHandler(this.pickupButton_Click);
-            // 
-            // meldButton
-            // 
-            this.meldButton.Location = new System.Drawing.Point(515, 481);
-            this.meldButton.Name = "meldButton";
-            this.meldButton.Size = new System.Drawing.Size(118, 29);
-            this.meldButton.TabIndex = 17;
-            this.meldButton.Text = "Meld";
-            this.meldButton.UseVisualStyleBackColor = true;
-            this.meldButton.Click += new System.EventHandler(this.meldButton_Click);
             // 
             // columnHeader6
             // 
@@ -288,11 +275,75 @@
             // 
             this.columnHeader20.Text = "Card 19";
             // 
+            // pickupButton
+            // 
+            this.pickupButton.Location = new System.Drawing.Point(548, 446);
+            this.pickupButton.Name = "pickupButton";
+            this.pickupButton.Size = new System.Drawing.Size(118, 29);
+            this.pickupButton.TabIndex = 16;
+            this.pickupButton.Text = "Pick Up";
+            this.pickupButton.UseVisualStyleBackColor = true;
+            this.pickupButton.Click += new System.EventHandler(this.pickupButton_Click);
+            // 
+            // meldButton
+            // 
+            this.meldButton.Location = new System.Drawing.Point(548, 481);
+            this.meldButton.Name = "meldButton";
+            this.meldButton.Size = new System.Drawing.Size(118, 29);
+            this.meldButton.TabIndex = 17;
+            this.meldButton.Text = "Meld";
+            this.meldButton.UseVisualStyleBackColor = true;
+            this.meldButton.Click += new System.EventHandler(this.meldButton_Click);
+            // 
+            // playerPoints4
+            // 
+            this.playerPoints4.AutoSize = true;
+            this.playerPoints4.Location = new System.Drawing.Point(123, 588);
+            this.playerPoints4.Name = "playerPoints4";
+            this.playerPoints4.Size = new System.Drawing.Size(13, 13);
+            this.playerPoints4.TabIndex = 18;
+            this.playerPoints4.Text = "0";
+            this.playerPoints4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // playerPoints3
+            // 
+            this.playerPoints3.AutoSize = true;
+            this.playerPoints3.Location = new System.Drawing.Point(374, 682);
+            this.playerPoints3.Name = "playerPoints3";
+            this.playerPoints3.Size = new System.Drawing.Size(13, 13);
+            this.playerPoints3.TabIndex = 19;
+            this.playerPoints3.Text = "0";
+            this.playerPoints3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // playerPoints2
+            // 
+            this.playerPoints2.AutoSize = true;
+            this.playerPoints2.Location = new System.Drawing.Point(804, 682);
+            this.playerPoints2.Name = "playerPoints2";
+            this.playerPoints2.Size = new System.Drawing.Size(13, 13);
+            this.playerPoints2.TabIndex = 20;
+            this.playerPoints2.Text = "0";
+            this.playerPoints2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // playerPoints1
+            // 
+            this.playerPoints1.AutoSize = true;
+            this.playerPoints1.Location = new System.Drawing.Point(1035, 588);
+            this.playerPoints1.Name = "playerPoints1";
+            this.playerPoints1.Size = new System.Drawing.Size(13, 13);
+            this.playerPoints1.TabIndex = 21;
+            this.playerPoints1.Text = "0";
+            this.playerPoints1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // GameWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1190, 811);
+            this.Controls.Add(this.playerPoints1);
+            this.Controls.Add(this.playerPoints2);
+            this.Controls.Add(this.playerPoints3);
+            this.Controls.Add(this.playerPoints4);
             this.Controls.Add(this.meldButton);
             this.Controls.Add(this.pickupButton);
             this.Controls.Add(this.meldList);
@@ -320,7 +371,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label welcomeText;
         private System.Windows.Forms.Label infoLabel;
-        private System.Windows.Forms.PictureBox card1;
         private System.Windows.Forms.ListBox discardList;
         private System.Windows.Forms.ListBox playerHand1;
         private System.Windows.Forms.ListBox playerHand2;
@@ -349,6 +399,10 @@
         private System.Windows.Forms.ColumnHeader columnHeader18;
         private System.Windows.Forms.ColumnHeader columnHeader19;
         private System.Windows.Forms.ColumnHeader columnHeader20;
+        private System.Windows.Forms.Label playerPoints4;
+        private System.Windows.Forms.Label playerPoints3;
+        private System.Windows.Forms.Label playerPoints2;
+        private System.Windows.Forms.Label playerPoints1;
     }
 }
 

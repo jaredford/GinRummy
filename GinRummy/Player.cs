@@ -10,13 +10,13 @@ namespace GinRummy
     {
         protected List<Card> hand = new List<Card>();
         protected List<Card> playedCards = new List<Card>();
-        protected int points;
+        private int points;
         void rearrangeHand()
         {
             hand.Sort((a,b) => b.getFaceValue().CompareTo(a.getFaceValue()));
             hand.Sort((a, b) => a.getSuit().CompareTo(b.getSuit()));
         }
-        int getPoints()
+        public int getPoints()
         {
             return points;
         }
@@ -38,7 +38,10 @@ namespace GinRummy
         {
             hand.AddRange(c);
         }
-        
+        public void addPoints(int points)
+        {
+            this.points += points;
+        }
         void refreshPoints()
         {
             int tempPoints = 0;
