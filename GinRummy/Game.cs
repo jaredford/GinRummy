@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,110 +9,145 @@ namespace GinRummy
 {
     class Game
     {
-        public Dictionary<Player, int> playerPoints = new Dictionary<Player, int>();
-        public List<Player> players = new List<Player>();
-        public List<List<Card>> melds = new List<List<Card>>();
-        public Deck deck = new Deck();
-        public DiscardPile discardPile = new DiscardPile();
-        bool pickedUp = false;
-        public Card pickedUpCard = null;
-        int turn, lastTurn, numberOfPlayers;
-        void InitializePlayers(int numberOfPlayers)
+        private List<Player> _players = new List<Player>();
+        private List<List<Card>> _melds = new List<List<Card>>();
+        private Deck _deck = new Deck();
+        private DiscardPile discardPile = new DiscardPile();
+        private bool _pickedUp = false;
+        private Card _pickedUpCard = null;
+        private int _turn, _lastTurn;
+        private readonly int numberOfPlayers;
+        void InitializePlayers(int numberPlayers)
         {
-            for (int i = 0; i < numberOfPlayers; i++)
-                players.Add(new Player());
+            for (int i = 0; i < numberPlayers; i++)
+                _players.Add(new Player());
         }
         public Game(int numberOfPlayers)
         {
-            turn = 1;
-            lastTurn = 1;
+            _turn = 1;
+            _lastTurn = 1;
             this.numberOfPlayers = numberOfPlayers;
-            deck.populateDeck();
+            _deck.PopulateDeck();
             InitializePlayers(numberOfPlayers);
-            List<Card> deal = deck.deal(numberOfPlayers);
+            var deal = _deck.Deal(numberOfPlayers);
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 if (numberOfPlayers > 2)
                 {
-                    players[i].setHand(deal.GetRange(0, 7));
+                    _players[i].SetHand(deal.GetRange(0, 7));
                     deal.RemoveRange(0, 7);
                 }
                 else
                 {
-                    players[i].setHand(deal.GetRange(0, 13));
+                   _players[i].SetHand(deal.GetRange(0, 13));
                     deal.RemoveRange(0, 13);
                 }
             }
         }
-        public void newRound ()
+
+        public Deck GetDeck()
         {
-            turn = lastTurn == numberOfPlayers ? 1 : lastTurn + 1;
-            deck.populateDeck();
-            List<Card> deal = deck.deal(numberOfPlayers);
+            return _deck;
+        }
+        public Card GetPickedUpCard()
+        {
+            return _pickedUpCard;
+        }
+
+        public void SetPickedUpCard(Card card)
+        {
+            _pickedUpCard = card;
+        }
+        public List<Player> GetPlayers()
+        {
+            return _players;
+        }
+
+        public void SetPlayers(List<Player> players)
+        {
+            _players = players;
+        }
+        public List<List<Card>> GetMelds()
+        {
+            return _melds;
+        }
+
+        public void SetMelds(List<List<Card>> melds)
+        {
+            _melds = melds;
+        }
+
+
+        public void NewRound ()
+        {
+            _turn = _lastTurn == numberOfPlayers ? 1 : _lastTurn + 1;
+            _lastTurn = _turn;
+            _deck.PopulateDeck();
+            List<Card> deal = _deck.Deal(numberOfPlayers);
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 if (numberOfPlayers > 2)
                 {
-                    players[i].setHand(deal.GetRange(0, 7));
+                    _players[i].SetHand(deal.GetRange(0, 7));
                     deal.RemoveRange(0, 7);
                 }
                 else
                 {
-                    players[i].setHand(deal.GetRange(0, 13));
+                    _players[i].SetHand(deal.GetRange(0, 13));
                     deal.RemoveRange(0, 13);
                 }
             }
         }
-        public int getTurn()
+        public int GetTurn()
         {
-            return turn;
+            return _turn;
         }
 
-        public void addMeld(List<Card> cards)
+        public void AddMeld(List<Card> cards)
         {
-            melds.Add(cards);
+            _melds.Add(cards);
         }
 
-        public bool isMeld(List<Card> cards, Card newCard, bool strict = false)
+        public bool IsMeld(List<Card> cards, Card newCard, bool strict = false)
         {
             if (cards.Contains(newCard))
                 cards.Remove(newCard);
             int sameFace = 0;
-            int suit = newCard.getSuit();
-            int faceValue = newCard.getFaceValue();
+            int suit = newCard.GetSuit();
+            int faceValue = newCard.GetFaceValue();
             bool meld = false;
             List<int> targetOffset = new List<int>();
             foreach (var card in cards)
             {
-                sameFace = card.getFaceValue() == faceValue ? sameFace + 1 : sameFace;
-                if (card.getSuit() == suit)
+                sameFace = card.GetFaceValue() == faceValue ? sameFace + 1 : sameFace;
+                if (card.GetSuit() == suit)
                 {
-                    switch (card.getFaceValue() - faceValue)
+                    switch (card.GetFaceValue() - faceValue)
                     {
                         case -2:
-                            meld = targetOffset.Contains(-2) ? true : meld;
+                            meld = targetOffset.Contains(-2) || meld;
                             targetOffset.Add(-1);
                             break;
                         case -1:
                             targetOffset.Add(1);
                             targetOffset.Add(-2);
-                            meld = targetOffset.Contains(-1) ? true : meld;
+                            meld = targetOffset.Contains(-1) || meld;
                             break;
                         case 1:
                             targetOffset.Add(-1);
                             targetOffset.Add(2);
-                            meld = targetOffset.Contains(1) ? true : meld;
+                            meld = targetOffset.Contains(1) || meld;
                             break;
                         case 2:
                             targetOffset.Add(1);
-                            meld = targetOffset.Contains(2) ? true : meld;
+                            meld = targetOffset.Contains(2) || meld;
                             break;
                     }
                 }
-                if (card.getFaceValue() == (int)FaceValues.Ace || faceValue == (int)FaceValues.Ace)
+                if (card.GetFaceValue() == (int)FaceValues.Ace || faceValue == (int)FaceValues.Ace)
                 {
-                    if (cards.Any(m => m.getFaceValue() == (int)FaceValues.King && m.getSuit() == suit))
-                        if (cards.Any(m => m.getFaceValue() == (int)FaceValues.Queen && m.getSuit() == suit))
+                    if (cards.Any(m => m.GetFaceValue() == (int)FaceValues.King && m.GetSuit() == suit))
+                        if (cards.Any(m => m.GetFaceValue() == (int)FaceValues.Queen && m.GetSuit() == suit))
                             meld = true;
                 }
             }
@@ -122,25 +158,25 @@ namespace GinRummy
                 {
                     foreach (var card in cards)
                     {
-                        if (card.getFaceValue() != faceValue)
+                        if (card.GetFaceValue() != faceValue)
                             return false;
                     }
                 }
             }
             else if (meld && strict)
             {
-                cards.Sort((a, b) => a.getFaceValue().CompareTo(b.getFaceValue()));
-                cards.Sort((a, b) => a.getSuit().CompareTo(b.getSuit()));
-                int previous = cards[0].getFaceValue() - 1;
-                if (previous == -1 && cards[1].getFaceValue() > 1)
+                cards.Sort((a, b) => a.GetFaceValue().CompareTo(b.GetFaceValue()));
+                cards.Sort((a, b) => a.GetSuit().CompareTo(b.GetSuit()));
+                int previous = cards[0].GetFaceValue() - 1;
+                if (previous == -1 && cards[1].GetFaceValue() > 1)
                 {
-                    cards.Add(new Card((int)FaceValues.King + 1, cards[0].getSuit()));
+                    cards.Add(new Card((int)FaceValues.King + 1, cards[0].GetSuit()));
                     cards.RemoveAt(0);
                 }
-                previous = cards[0].getFaceValue() - 1;
+                previous = cards[0].GetFaceValue() - 1;
                 foreach (var card in cards)
                 {
-                    if (card.getSuit() != suit || card.getFaceValue() != previous + 1)
+                    if (card.GetSuit() != suit || card.GetFaceValue() != previous + 1)
                     {
                         return false;
                     }
@@ -149,28 +185,28 @@ namespace GinRummy
             }
             return meld;
         }
-        public void sortMelds()
+        public void SortMelds()
         {
-            foreach (var meld in melds)
+            foreach (var meld in _melds)
             {
-                meld.Sort((b, a) => b.getFaceValue().CompareTo(a.getFaceValue()));
-                meld.Sort((a, b) => a.getSuit().CompareTo(b.getSuit()));
+                meld.Sort((b, a) => b.GetFaceValue().CompareTo(a.GetFaceValue()));
+                meld.Sort((a, b) => a.GetSuit().CompareTo(b.GetSuit()));
             }
         }
-        public void setPickedUp()
+        public void SetPickedUp()
         {
-            pickedUp = true;
+            _pickedUp = true;
         }
 
-        public bool didPickUp()
+        public bool DidPickUp()
         {
-            return pickedUp;
+            return _pickedUp;
         }
 
-        public void nextTurn()
+        public void NextTurn()
         {
-            pickedUp = false;
-            turn = turn == numberOfPlayers ? 1 : turn + 1;
+            _pickedUp = false;
+            _turn = _turn == numberOfPlayers ? 1 : _turn + 1;
         }
     }
 }

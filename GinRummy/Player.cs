@@ -11,56 +11,36 @@ namespace GinRummy
         private List<Card> hand = new List<Card>();
         private List<Card> playedCards = new List<Card>();
         private int points;
-        void rearrangeHand()
+        void RearrangeHand()
         {
-            hand.Sort((a,b) => b.getFaceValue().CompareTo(a.getFaceValue()));
-            hand.Sort((a, b) => a.getSuit().CompareTo(b.getSuit()));
+            hand.Sort((a,b) => b.GetFaceValue().CompareTo(a.GetFaceValue()));
+            hand.Sort((a, b) => a.GetSuit().CompareTo(b.GetSuit()));
         }
-        public int getPoints()
+        public int GetPoints()
         {
             return points;
         }
-        public void setHand(List<Card> c)
+        public void SetHand(List<Card> c)
         {
             hand = c;
         }
-        public void discard(Card c)
+        public void Discard(Card c)
         {
             hand.Remove(c);
         }
-        public List<Card> getHand()
+        public List<Card> GetHand()
         {
-            rearrangeHand();
+            RearrangeHand();
             return hand;
         }
 
-        public void pickUp(List<Card> c)
+        public void PickUp(List<Card> c)
         {
             hand.AddRange(c);
         }
-        public void addPoints(int points)
+        public void AddPoints(int points)
         {
             this.points += points;
-        }
-        void refreshPoints()
-        {
-            int tempPoints = 0;
-            foreach(var card in playedCards)
-            {
-                if(card.getFaceValue() == (int)FaceValues.Ace)
-                {
-                    tempPoints += 15;
-                }
-                else if(card.getFaceValue() >= (int)FaceValues.Jack)
-                {
-                    tempPoints += 10;
-                }
-                else
-                {
-                    tempPoints += 5;
-                }
-            }
-            points = tempPoints;
         }
     }
 }

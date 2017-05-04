@@ -8,8 +8,8 @@ namespace GinRummy
 {
     class Card
     {
-        int faceValue;
-        int suit;
+        readonly int faceValue;
+        readonly int suit;
 
         public Card(int faceValue, int suit)
         {
@@ -17,17 +17,17 @@ namespace GinRummy
             this.suit = suit;
         }
 
-        public int getFaceValue()
+        public int GetFaceValue()
         {
             return faceValue;
         }
 
-        public int getSuit()
+        public int GetSuit()
         {
             return suit;
         }
 
-        public int getPointValue()
+        public int GetPointValue()
         {
             if(faceValue >= (int)FaceValues.Two && faceValue < (int)FaceValues.Ten)
             {
@@ -38,12 +38,12 @@ namespace GinRummy
 
         public string ToShortString()
         {
-            return Enum.GetName(typeof(FaceValues), this.getFaceValue()) + " " + Enum.GetName(typeof(ShortSuits), this.getSuit());
+            return Enum.GetName(typeof(FaceValues), this.GetFaceValue()) + " " + Enum.GetName(typeof(ShortSuits), this.GetSuit());
         }
 
         public override string ToString()
         {
-            return Enum.GetName(typeof(FaceValues), this.getFaceValue()) + " of " + Enum.GetName(typeof(Suits), this.getSuit());
+            return Enum.GetName(typeof(FaceValues), this.GetFaceValue()) + " of " + Enum.GetName(typeof(Suits), this.GetSuit());
         }
     }
     enum FaceValues

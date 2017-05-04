@@ -46,6 +46,7 @@
             this.playerPoints2 = new System.Windows.Forms.Label();
             this.playerPoints1 = new System.Windows.Forms.Label();
             this.layoffButton = new System.Windows.Forms.Button();
+            this.showHand = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // startGame
@@ -100,7 +101,7 @@
             this.discardList.Name = "discardList";
             this.discardList.Size = new System.Drawing.Size(120, 95);
             this.discardList.TabIndex = 6;
-            this.discardList.DoubleClick += new System.EventHandler(this.doubleClickDiscardList);
+            this.discardList.DoubleClick += new System.EventHandler(this.DoubleClickDiscardList);
             // 
             // playerHand1
             // 
@@ -110,8 +111,8 @@
             this.playerHand1.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.playerHand1.Size = new System.Drawing.Size(120, 251);
             this.playerHand1.TabIndex = 7;
-            this.playerHand1.SelectedIndexChanged += new System.EventHandler(this.selectedIndexChanged);
-            this.playerHand1.DoubleClick += new System.EventHandler(this.doubleClickList);
+            this.playerHand1.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
+            this.playerHand1.DoubleClick += new System.EventHandler(this.DoubleClickList);
             // 
             // playerHand2
             // 
@@ -121,8 +122,8 @@
             this.playerHand2.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.playerHand2.Size = new System.Drawing.Size(120, 251);
             this.playerHand2.TabIndex = 8;
-            this.playerHand2.SelectedIndexChanged += new System.EventHandler(this.selectedIndexChanged);
-            this.playerHand2.DoubleClick += new System.EventHandler(this.doubleClickList);
+            this.playerHand2.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
+            this.playerHand2.DoubleClick += new System.EventHandler(this.DoubleClickList);
             // 
             // playerHand3
             // 
@@ -132,8 +133,8 @@
             this.playerHand3.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.playerHand3.Size = new System.Drawing.Size(120, 251);
             this.playerHand3.TabIndex = 9;
-            this.playerHand3.SelectedIndexChanged += new System.EventHandler(this.selectedIndexChanged);
-            this.playerHand3.DoubleClick += new System.EventHandler(this.doubleClickList);
+            this.playerHand3.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
+            this.playerHand3.DoubleClick += new System.EventHandler(this.DoubleClickList);
             // 
             // playerHand4
             // 
@@ -143,8 +144,8 @@
             this.playerHand4.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.playerHand4.Size = new System.Drawing.Size(120, 251);
             this.playerHand4.TabIndex = 10;
-            this.playerHand4.SelectedIndexChanged += new System.EventHandler(this.selectedIndexChanged);
-            this.playerHand4.DoubleClick += new System.EventHandler(this.doubleClickList);
+            this.playerHand4.SelectedIndexChanged += new System.EventHandler(this.SelectedIndexChanged);
+            this.playerHand4.DoubleClick += new System.EventHandler(this.DoubleClickList);
             // 
             // meldList
             // 
@@ -228,11 +229,23 @@
             this.layoffButton.UseVisualStyleBackColor = true;
             this.layoffButton.Click += new System.EventHandler(this.layoffButton_Click);
             // 
+            // showHand
+            // 
+            this.showHand.Enabled = false;
+            this.showHand.Location = new System.Drawing.Point(546, 551);
+            this.showHand.Name = "showHand";
+            this.showHand.Size = new System.Drawing.Size(118, 29);
+            this.showHand.TabIndex = 23;
+            this.showHand.Text = "Show Hand";
+            this.showHand.UseVisualStyleBackColor = true;
+            this.showHand.Click += new System.EventHandler(this.showHand_Click);
+            // 
             // GameWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1190, 811);
+            this.Controls.Add(this.showHand);
             this.Controls.Add(this.layoffButton);
             this.Controls.Add(this.playerPoints1);
             this.Controls.Add(this.playerPoints2);
@@ -278,6 +291,7 @@
         private System.Windows.Forms.Label playerPoints2;
         private System.Windows.Forms.Label playerPoints1;
         private System.Windows.Forms.Button layoffButton;
+        private System.Windows.Forms.Button showHand;
     }
 }
 

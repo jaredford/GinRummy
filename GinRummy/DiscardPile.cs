@@ -8,25 +8,25 @@ namespace GinRummy
 {
     class DiscardPile
     {
-        List<Card> cards = new List<Card>();
+        private List<Card> _cards = new List<Card>();
         public List<Card> pickUp(bool isMeld, Card targetCard)
         {
-            int targetCardIndex = cards.IndexOf(targetCard);
+            var targetCardIndex = _cards.IndexOf(targetCard);
             if (isMeld || targetCardIndex == 0)
             {
-                List<Card> pickup = cards.GetRange(0, targetCardIndex + 1);
-                cards.RemoveRange(0, targetCardIndex + 1);
+                var pickup = _cards.GetRange(0, targetCardIndex + 1);
+                _cards.RemoveRange(0, targetCardIndex + 1);
                 return pickup;
             }
             return null;
         }
-        public void discard(Card c)
+        public void Discard(Card c)
         {
-            cards.Insert(0, c);
+            _cards.Insert(0, c);
         }
-        public List<Card> getCards()
+        public List<Card> GetCards()
         {
-            return cards;
+            return _cards;
         }
     }
 }

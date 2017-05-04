@@ -7,3 +7,12 @@ c:\users\jared\documents\visual studio 2015\Projects\GinRummy\GinRummy\obj\Debug
 c:\users\jared\documents\visual studio 2015\Projects\GinRummy\GinRummy\obj\Debug\GinRummy.exe
 c:\users\jared\documents\visual studio 2015\Projects\GinRummy\GinRummy\obj\Debug\GinRummy.pdb
 C:\Users\Jared\Documents\Visual Studio 2015\Projects\GinRummy\GinRummy\obj\Debug\GinRummy.GameWindow.resources
+C:\Users\50651\Source\Repos\GinRummy\GinRummy\bin\Debug\GinRummy.exe.config
+C:\Users\50651\Source\Repos\GinRummy\GinRummy\obj\Debug\GinRummy.exe
+C:\Users\50651\Source\Repos\GinRummy\GinRummy\obj\Debug\GinRummy.pdb
+C:\Users\50651\Source\Repos\GinRummy\GinRummy\obj\Debug\GinRummy.csprojResolveAssemblyReference.cache
+C:\Users\50651\Source\Repos\GinRummy\GinRummy\obj\Debug\GinRummy.GameWindow.resources
+C:\Users\50651\Source\Repos\GinRummy\GinRummy\obj\Debug\GinRummy.Properties.Resources.resources
+C:\Users\50651\Source\Repos\GinRummy\GinRummy\obj\Debug\GinRummy.csproj.GenerateResource.Cache
+C:\Users\50651\Source\Repos\GinRummy\GinRummy\bin\Debug\GinRummy.exe
+C:\Users\50651\Source\Repos\GinRummy\GinRummy\bin\Debug\GinRummy.pdb

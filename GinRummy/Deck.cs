@@ -8,23 +8,23 @@ namespace GinRummy
 {
     class Deck
     {
-        List<Card> cards = new List<Card>();
-        public List<Card> deal(int numberOfPlayers)
+        private List<Card> cards = new List<Card>();
+        public List<Card> Deal(int numberOfPlayers)
         {
-            int numCards = numberOfPlayers > 2 ? 7 : 13;
-            List<Card> cardsToDeal = new List<Card>(cards.GetRange(0, numberOfPlayers * numCards));
+            var numCards = numberOfPlayers > 2 ? 7 : 13;
+            var cardsToDeal = new List<Card>(cards.GetRange(0, numberOfPlayers * numCards));
             cards.RemoveRange(0, numberOfPlayers * numCards);
             return cardsToDeal;
         }
-        public Card draw()
+        public Card Draw()
         {
             Card c = cards[0];
             cards.Remove(c);
             return c;
         }
-        public void populateDeck()
+        public void PopulateDeck()
         {
-            Random _random = new Random();
+            Random random = new Random();
             for (int suit = 0; suit < 4; suit++)
             {
                 for (int face = 0; face < 13; face++)
@@ -32,13 +32,13 @@ namespace GinRummy
                     cards.Add(new Card(face, suit));
                 }
             }
-            int n = 52;
-            for (int i = 0; i < n; i++)
+            const int n = 52;
+            for (var i = 0; i < n; i++)
             {
                 // NextDouble returns a random number between 0 and 1.
                 // ... It is equivalent to Math.random() in Java.
-                int r = i + (int)(_random.NextDouble() * (n - i));
-                Card c = cards[r];
+                var r = i + (int)(random.NextDouble() * (n - i));
+                var c = cards[r];
                 cards[r] = cards[i];
                 cards[i] = c;
             }

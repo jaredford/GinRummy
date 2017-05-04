@@ -37,21 +37,21 @@ namespace GinRummy
                 }
                 else
                 {
-                    g.newRound();
+                    g.NewRound();
                 }
-                int i = 1;
-                foreach (var player in g.players)
+                var i = 1;
+                foreach (var player in g.GetPlayers())
                 {
                     ListBox l = (ListBox)Controls.Find("playerHand" + i, true)[0];
                     playerHands.Add(l);
-                    l.DataSource = player.getHand();
+                    l.DataSource = player.GetHand();
                     i++;
                 }
-                for (int j = 0; j < g.players.Count(); j++)
+                for (var j = 0; j < g.GetPlayers().Count(); j++)
                 {
                     playerHands[j].DataSource = null;
                 }
-                playerHands[g.getTurn() - 1].DataSource = g.players[g.getTurn() - 1].getHand();
+                playerHands[g.GetTurn() - 1].DataSource = g.GetPlayers()[g.GetTurn() - 1].GetHand();
                 startGame.Enabled = false;
                 pickupButton.Enabled = true;
                 playerHand1.Enabled = true;
@@ -66,12 +66,12 @@ namespace GinRummy
                 infoLabel.Text = ex.Message;
             }
         }
-        public void setInfoLabel(String text)
+        public void SetInfoLabel(String text)
         {
             infoLabel.Text += text;
         }
 
-        private void selectedIndexChanged(object sender, EventArgs e)
+        private void SelectedIndexChanged(object sender, EventArgs e)
         {
             // Gets called whenever a player's list of selected cards changes
             infoLabel.ResetText();
@@ -85,18 +85,18 @@ namespace GinRummy
                 return;
             Card c = cards.Last();
             cards.RemoveAt(cards.Count - 1);
-            if (l == (ListBox)Controls.Find("playerHand" + g.getTurn(), true)[0])
+            if (l == (ListBox)Controls.Find("playerHand" + g.GetTurn(), true)[0])
             {
-                if (g.isMeld(cards, c, true))
+                if (g.IsMeld(cards, c, true))
                 {
                     meldButton.Enabled = true;
                 }
                 else
                 {
                     bool layoffPossible = false;
-                    foreach (var meld in g.melds)
+                    foreach (var meld in g.GetMelds())
                     {
-                        if (g.isMeld(meld, c))
+                        if (g.IsMeld(meld, c))
                         {
                             layoffPossible = true;
                         }
@@ -105,25 +105,20 @@ namespace GinRummy
                     meldButton.Enabled = false;
                 }
             }
-            foreach (var player in g.players)
-            {
-                if (player.getHand().Count() == 0)
-                {
-                    roundOver();
-                }
-            }
+            if(g.GetPlayers().Any(p => p.GetHand().Count == 0))
+                RoundOver();
         }
 
-        private void addToMeldList(List<Card> cards)
+        private void AddToMeldList(List<Card> cards)
         {
             ListView listOfMelds = (ListView)Controls.Find("meldList", true)[0];
             listOfMelds.Clear();
             listOfMelds.Refresh();
             listOfMelds.View = View.Details;
             if (cards != null)
-                g.addMeld(cards);
+                g.AddMeld(cards);
             int longestMeld = 0;
-            foreach (var meld in g.melds)
+            foreach (var meld in g.GetMelds())
             {
                 longestMeld = meld.Count() > longestMeld ? meld.Count : longestMeld;
             }
@@ -132,15 +127,15 @@ namespace GinRummy
             {
                 listOfMelds.Columns.Add("Card " + i);
             }
-            g.sortMelds();
+            g.SortMelds();
             int meldCounter = 1;
-            foreach (var meld in g.melds)
+            foreach (var meld in g.GetMelds())
             {
                 ListViewItem item = new ListViewItem("Meld " + meldCounter);
                 foreach (var card in meld)
                 {
                     item.SubItems.Add(card.ToShortString());
-                    g.pickedUpCard = card == g.pickedUpCard ? null : g.pickedUpCard;
+                    g.SetPickedUpCard(card == g.GetPickedUpCard() ? null : g.GetPickedUpCard());
                 }
                 listOfMelds.Items.Add(item);
                 infoLabel.ResetText();
@@ -148,94 +143,95 @@ namespace GinRummy
             }
         }
 
-        private void doubleClickList(object sender, EventArgs e)
+        private void DoubleClickList(object sender, EventArgs e)
         {
             // Make sure the player didn't just pick up from the discard pile
-            if (g.pickedUpCard != null)
+            if (g.GetPickedUpCard() != null)
             {
-                infoLabel.Text = "You must make a meld with the " + g.pickedUpCard;
+                infoLabel.Text = "You must make a meld with the " + g.GetPickedUpCard();
                 return;
             }
             // Make sure the player has picked up before discarding
-            if (g.didPickUp())
+            if (g.DidPickUp())
             {
                 ListBox l = sender as ListBox;
-                int turn = g.getTurn();
+                int turn = g.GetTurn();
                 if (l == (ListBox)Controls.Find("playerHand" + turn, true)[0])
                 {
-                    discardPile.discard(l.SelectedItem as Card);
-                    g.players[turn - 1].discard(l.SelectedItem as Card);
+                    discardPile.Discard(l.SelectedItem as Card);
+                    g.GetPlayers()[turn - 1].Discard(l.SelectedItem as Card);
                     playerHands[turn - 1].DataSource = null;
-                    playerHands[turn - 1].DataSource = g.players[turn - 1].getHand();
+                    playerHands[turn - 1].DataSource = g.GetPlayers()[turn - 1].GetHand();
                     discardList.DataSource = null;
-                    discardList.DataSource = discardPile.getCards();
+                    discardList.DataSource = discardPile.GetCards();
                     discardList.Refresh();                    
-                    g.nextTurn();
-                    playerHands[turn - 1].DataSource = g.players[turn - 1].getHand();
-                    infoLabel.Text = "It's Player " + g.getTurn() + "'s Turn";
-                    for (int i = 0; i < g.players.Count(); i++)
+                    g.NextTurn();
+                    playerHands[turn - 1].DataSource = g.GetPlayers()[turn - 1].GetHand();
+                    infoLabel.Text = "It's Player " + g.GetTurn() + "'s Turn";
+                    for (var i = 0; i < g.GetPlayers().Count(); i++)
                     {
                         playerHands[i].DataSource = null;
                         playerHands[i].DataSource = new List<string>();
                     }
                     pickupButton.Enabled = true;
                 }
+                showHand.Enabled = true;
             }
-            foreach (var player in g.players)
+            foreach (var player in g.GetPlayers())
             {
-                if (player.getHand().Count() == 0)
+                if (player.GetHand().Count == 0)
                 {
-                    roundOver();
+                    RoundOver();
                 }
             }
         }
 
-        private void doubleClickDiscardList(object sender, EventArgs e)
+        private void DoubleClickDiscardList(object sender, EventArgs e)
         {
             // Make sure the player hasn't picked up yet
-            if (!g.didPickUp())
+            if (!g.DidPickUp())
             {
                 ListBox l = sender as ListBox;
                 Card selectedCard = l.SelectedItem as Card;
-                int turn = g.getTurn();
+                int turn = g.GetTurn();
                 List<Card> temp = new List<Card>();
-                temp.AddRange(g.players[turn - 1].getHand());
+                temp.AddRange(g.GetPlayers()[turn - 1].GetHand());
                 if (l.SelectedIndex != 0)
                 {
                     for (int i = l.SelectedIndex; i >= 0; i--)
                     {
-                        temp.Add(discardPile.getCards()[i]);
+                        temp.Add(discardPile.GetCards()[i]);
                     }
                 }
-                List<Card> c = discardPile.pickUp(g.isMeld(temp, selectedCard), selectedCard);
+                List<Card> c = discardPile.pickUp(g.IsMeld(temp, selectedCard), selectedCard);
                 if (c != null)
                 {
-                    if (c.Count() > 1)
-                        g.pickedUpCard = selectedCard;
-                    g.players[turn - 1].pickUp(c);
+                    if (c.Count > 1)
+                        g.SetPickedUpCard(selectedCard);
+                    g.GetPlayers()[turn - 1].PickUp(c);
                     playerHands[turn - 1].DataSource = null;
-                    playerHands[turn - 1].DataSource = g.players[turn - 1].getHand();
+                    playerHands[turn - 1].DataSource = g.GetPlayers()[turn - 1].GetHand();
                     discardList.DataSource = null;
-                    discardList.DataSource = discardPile.getCards();
+                    discardList.DataSource = discardPile.GetCards();
                     discardList.Refresh();
-                    g.setPickedUp();
+                    g.SetPickedUp();
                     pickupButton.Enabled = false;
                 }
                 else
                 {
-                    foreach (var meld in g.melds)
+                    foreach (var meld in g.GetMelds())
                     {
-                        List<Card> cards = discardPile.pickUp(g.isMeld(meld, selectedCard), selectedCard);
+                        List<Card> cards = discardPile.pickUp(g.IsMeld(meld, selectedCard), selectedCard);
                         if(cards != null)
                         {
-                            g.pickedUpCard = selectedCard;
-                            g.players[turn - 1].pickUp(cards);
+                            g.SetPickedUpCard(selectedCard);
+                            g.GetPlayers()[turn - 1].PickUp(cards);
                             playerHands[turn - 1].DataSource = null;
-                            playerHands[turn - 1].DataSource = g.players[turn - 1].getHand();
+                            playerHands[turn - 1].DataSource = g.GetPlayers()[turn - 1].GetHand();
                             discardList.DataSource = null;
-                            discardList.DataSource = discardPile.getCards();
+                            discardList.DataSource = discardPile.GetCards();
                             discardList.Refresh();
-                            g.setPickedUp();
+                            g.SetPickedUp();
                             pickupButton.Enabled = false;
                             return;
                         }
@@ -243,11 +239,11 @@ namespace GinRummy
                     
                     infoLabel.Text = "Illegal Draw!";
                 }
-                foreach (var player in g.players)
+                foreach (var player in g.GetPlayers())
                 {
-                    if (player.getHand().Count() == 0)
+                    if (player.GetHand().Count == 0)
                     {
-                        roundOver();
+                        RoundOver();
                     }
                 }
             }
@@ -257,98 +253,98 @@ namespace GinRummy
         {
             Button b = sender as Button;
             // Make sure the player only draws one card
-            if (!g.didPickUp())
+            if (!g.DidPickUp())
             {
-                int turn = g.getTurn();
-                g.setPickedUp();
+                int turn = g.GetTurn();
+                g.SetPickedUp();
                 ListBox l = (ListBox)Controls.Find("playerHand" + turn, true)[0]; // get the current player's hand
                 List<Card> c = new List<Card>();
-                c.Add(g.deck.draw());
-                g.players[turn - 1].pickUp(c);
+                c.Add(g.GetDeck().Draw());
+                g.GetPlayers()[turn - 1].PickUp(c);
                 l.DataSource = null;
-                l.DataSource = g.players[turn - 1].getHand();
+                l.DataSource = g.GetPlayers()[turn - 1].GetHand();
             }
             b.Enabled = false;
         }
         private void meldButton_Click(object sender, EventArgs e)
         {
-            int turn = g.getTurn();
+            int turn = g.GetTurn();
             ListBox l = (ListBox)Controls.Find("playerHand" + turn, true)[0]; // get the current player's hand
             List<Card> cards = new List<Card>();
             foreach (Card card in l.SelectedItems)
             {
                 cards.Add(card as Card);
-                g.players[turn - 1].addPoints(card.getPointValue());
+                g.GetPlayers()[turn - 1].AddPoints(card.GetPointValue());
 
             }
             foreach (var card in cards)
             {
-                g.players[turn - 1].getHand().Remove(card);
+                g.GetPlayers()[turn - 1].GetHand().Remove(card);
             }
             Label playerPoints = (Label)Controls.Find("playerPoints" + turn, true)[0]; // update player points
-            playerPoints.Text = g.players[turn - 1].getPoints().ToString();
+            playerPoints.Text = g.GetPlayers()[turn - 1].GetPoints().ToString();
 
             l.DataSource = null;
-            l.DataSource = g.players[turn - 1].getHand();
-            addToMeldList(cards);
-            foreach (var player in g.players)
+            l.DataSource = g.GetPlayers()[turn - 1].GetHand();
+            AddToMeldList(cards);
+            foreach (var player in g.GetPlayers())
             {
-                if (player.getHand().Count() == 0)
+                if (player.GetHand().Count == 0)
                 {
-                    roundOver();
+                    RoundOver();
                 }
             }
         }
 
         private void layoffButton_Click(object sender, EventArgs e)
         {
-            int turn = g.getTurn();
+            int turn = g.GetTurn();
             ListBox l = (ListBox)Controls.Find("playerHand" + turn, true)[0]; // get the current player's hand
 
             Card cardToLayoff = l.SelectedItem as Card;
-            g.players[turn - 1].getHand().Remove(cardToLayoff);
-            g.players[turn - 1].addPoints(cardToLayoff.getPointValue());
+            g.GetPlayers()[turn - 1].GetHand().Remove(cardToLayoff);
+            g.GetPlayers()[turn - 1].AddPoints(cardToLayoff.GetPointValue());
 
 
             Label playerPoints = (Label)Controls.Find("playerPoints" + turn, true)[0]; // update player points
-            playerPoints.Text = g.players[turn - 1].getPoints().ToString();
-            g.players[turn - 1].discard(cardToLayoff);
+            playerPoints.Text = g.GetPlayers()[turn - 1].GetPoints().ToString();
+            g.GetPlayers()[turn - 1].Discard(cardToLayoff);
 
             l.DataSource = null;
-            l.DataSource = g.players[turn - 1].getHand();
-            layoffCard(cardToLayoff);
+            l.DataSource = g.GetPlayers()[turn - 1].GetHand();
+            LayoffCard(cardToLayoff);
         }
 
-        private void layoffCard(Card card)
+        private void LayoffCard(Card card)
         {
             int i = -1;
-            foreach (var meld in g.melds)
+            foreach (var meld in g.GetMelds())
             {
                 i++;
-                if (g.isMeld(meld, card))
+                if (g.IsMeld(meld, card))
                     break;
             }
-            g.melds[i].Add(card);
+            g.GetMelds()[i].Add(card);
             infoLabel.ResetText();
-            addToMeldList(null);
-            foreach (var player in g.players)
+            AddToMeldList(null);
+            foreach (var player in g.GetPlayers())
             {
-                if (player.getHand().Count() == 0)
+                if (player.GetHand().Count == 0)
                 {
-                    roundOver();
+                    RoundOver();
                 }
             }
         }
-        private void roundOver()
+        private void RoundOver()
         {
             int i = 1;
-            foreach (var player in g.players)
+            foreach (var player in g.GetPlayers())
             {
-                foreach (var card in player.getHand())
+                foreach (var card in player.GetHand())
                 {
-                    player.addPoints(-card.getPointValue());
+                    player.AddPoints(-card.GetPointValue());
                 }
-                if(player.getPoints() >= 500)
+                if(player.GetPoints() >= 500)
                 {
                     newGame = true;
                     infoLabel.Text = "Player " + i + " Wins!";
@@ -367,6 +363,14 @@ namespace GinRummy
             playerHand3.Enabled = false;
             playerHand4.Enabled = false;
             discardList.Enabled = false;
+        }
+
+        private void showHand_Click(object sender, EventArgs e)
+        {
+            showHand.Enabled = false;
+            var turn = g.GetTurn();
+            playerHands[turn - 1].DataSource = null;
+            playerHands[turn - 1].DataSource = g.GetPlayers()[turn - 1].GetHand();
         }
     }
 }
